@@ -1,0 +1,163 @@
+
+<div class="content p-1">
+    <div class="list-group-item">
+        <div class="d-flex">
+            <div class="mr-auto p-2">
+                <h2 class="display-4 titulo">Registrar Carregamento</h2>
+            </div>
+            <div class="p-2">
+                <a href="/loading/show">
+                    <button class="btn btn-outline-info btn-sm">
+                        Listar
+                    </button>
+                </a>
+            </div>
+        </div>
+        {{>_msg}}
+        <hr>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="silo"><span class="text-danger">*</span>Silo</label>
+                    <select name="silo" id="silo" class="form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="product"><span class="text-danger">*</span>Produto</label>
+                    <select name="product" id="product" class="form-control">
+                        <option>MP-001-1-03 Trioxido de Molibdênio</option>
+                        <option>I-002-2-03 Alumínio AT</option>
+                        <option>I-001-1-03 Ferro Silício</option>
+                        <option>I-003-1-03 Hematita</option>
+                        <option>MP-003-1-03 Scheelita</option>
+                        <option>I-002-1-02 Alumínio ICA</option>
+                        </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="amount"><span class="text-danger">*</span>Quantidade (TN)</label>
+                    <input name="amount" id="amount" type="text" class="amount" placeholder="Quantidade" required>
+                </div>
+            </div>
+
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="batch" ><span class="text-danger" >*</span>Lote</label>
+                    <input name="batch" type="text" id="batch" class="form-control" placeholder="Lote" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="date" ><span class="text-danger">*</span>Data</label>
+                    <input name="date" id="date" type="date" class="form-control" placeholder="Data" required>
+                </div>
+            </div>
+            <p>
+                <span class="text-danger">* </span>Campo obrigatório
+            </p>
+            <button type="button" id="form1" class="btn btn-success">Cadastrar</button>
+        </form>
+
+          <form>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="silo"><span class="text-danger">*</span>Silo</label>
+                    <select name="silo" id="silo" class="form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="product"><span class="text-danger">*</span>Produto</label>
+                    <select name="product" id="product" class="form-control">
+                        <option>MP-001-1-03 Trioxido de Molibdênio</option>
+                        <option>I-002-2-03 Alumínio AT</option>
+                        <option>I-001-1-03 Ferro Silício</option>
+                        <option>I-003-1-03 Hematita</option>
+                        <option>MP-003-1-03 Scheelita</option>
+                        <option>I-002-1-02 Alumínio ICA</option>
+                        </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="amount"><span class="text-danger">*</span>Quantidade (TN)</label>
+                    <input name="amount" id="amount" type="text" class="amount" placeholder="Quantidade" required>
+                </div>
+            </div>
+
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="batch" ><span class="text-danger" >*</span>Lote</label>
+                    <input name="batch" type="text" id="batch" class="form-control" placeholder="Lote" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="date" ><span class="text-danger">*</span>Data</label>
+                    <input name="date" id="date" type="date" class="form-control" placeholder="Data" required>
+                </div>
+            </div>
+            <p>
+                <span class="text-danger">* </span>Campo obrigatório
+            </p>
+           
+        </form>
+    </div>
+</div>
+
+<script>
+    
+    try {
+        let form1 = document.querySelector('#form1')
+        form1.addEventListener('click', async () => {
+            let silo = document.querySelector('#silo').value
+            let product = document.querySelector('#product').value
+            let amount = document.querySelector('#amount').value
+            let batch = document.querySelector('#batch').value
+            let date = document.querySelector('#date').value  
+
+            const response = await fetch('http://localhost:2000/loading/create', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ silo, product, amount, batch, date }) 
+            })
+            if(response.status === 200) {
+                return swal("Sucesso !", "Carregamento realizado com sucesso !", "success");
+            }
+            if(response.status === 400) {
+                return swal("Error: !", "  Por favor preencha todos os campos !", "error");
+            }
+        })
+        
+    } catch (err) {
+        console.log(`Erro: ${err}`)
+    }
+
+</script>

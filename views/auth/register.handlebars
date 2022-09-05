@@ -1,0 +1,99 @@
+<div class="content p-1">
+    <div class="list-group-item">
+        <div class="d-flex">
+            <div class="mr-auto p-2">
+                <h2 class="display-4 titulo">Cadastrar Usuário</h2>
+            </div>
+            <div class="p-2">
+                <a href="/users">
+                    <button class="btn btn-outline-info btn-sm">
+                        Listar
+                    </button>
+                </a>
+            </div>
+        </div>
+        {{>_msg}}
+        <hr>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label><span class="text-danger">*</span> Nome</label>
+                    <input name="name" type="text" class="form-control" id="name" placeholder="Nome completo"
+                        value="{{user.name}}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label><span class="text-danger">*</span> E-mail</label>
+                    <input name="email" type="email" class="form-control" id="email" placeholder="O melhor e-mail"
+                        value="{{user.email}}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label><span class="text-danger">*</span>Senha</label>
+                    <input name="password" type="password" class="form-control" id="password"
+                        placeholder="Senha com minimo 6 caracteres" value="{{user.password}}" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label><span class="text-danger">*</span>Repetir Senha</label>
+                    <input name="confirmpassword" type="password" class="form-control" id="confirmpassword"
+                        placeholder="Digite novamente" value="{{user.confirmpassword}}" required>
+                </div>
+            </div>
+
+
+            <p>
+                <span class="text-danger">* </span>Campo obrigatório
+            </p>
+            <button id="form1" type="button" class="btn btn-success">Cadastrar</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    
+    try {
+        let form1 = document.querySelector('#form1')
+        form1.addEventListener('click', async () => {
+            let name = document.querySelector('#name').value
+            let email = document.querySelector('#email').value
+            let password = document.querySelector('#password').value
+            let confirmpassword = document.querySelector('#confirmpassword').value
+
+
+
+            const response = await fetch('http://localhost:2000/register', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ name, email, password, confirmpassword }) 
+            })
+            if(response.status === 200) {
+                return swal("Sucesso !", "Usuário atualizado com sucesso !", "success");
+            }
+            if(password !== confirmpassword) {
+                return swal("Error: !", "  As senhas não conferem tenta novamente !", "error");
+            }
+
+            if(response.status === 400) {
+                return swal("Error: !", "  O email já está em uso ! !", "error");
+            }
+
+            if(response.status === 411) {
+                return swal("Error: !", "  Senha muito fraca !", "error");
+            }
+        })
+        
+    } catch (err) {
+        console.log(`Erro: ${err}`)
+    }
+
+</script>

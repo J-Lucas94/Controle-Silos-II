@@ -1,0 +1,63 @@
+<div class="content p-1">
+    <div class="list-group-item">
+        <div class="d-flex">
+            <div class="mr-auto p-2">
+                <h2 class="display-4 titulo">Movimentos</h2>
+            </div>
+
+
+        </div>
+        <hr>
+        {{>_msg}}
+
+        <div class="table-responsive">
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Silo</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Lote</th>
+                        <th>Data</th>
+                        <th>Tipo de Movimento</th>
+                        <th></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each loading}}
+                    <tr>
+                        <td>{{this.User.name}}</td>
+                        <td>{{this.silo}}</td>
+                        <td>{{this.product}}</td>
+                        <td>{{this.amount}}</td>
+                        <td>{{this.batch}}</td>
+                        <td data-order="{{formatDate this.date}}">{{formatDate2 this.date}}</td>
+                        <td>{{this.type}}</td>
+                     
+                        <td class="text-center">
+                            <span class="d-none d-md-block">
+
+                                <a href="/loading/edit/{{this.id}}" class="btn btn-outline-warning btn-sm">Editar</a>
+
+                            </span>
+                            <div class="dropdown d-block d-md-none">
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
+                                    <a class="dropdown-item" href="/loading/edit/{{this.id}}">Editar</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>

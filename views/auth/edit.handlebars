@@ -1,0 +1,64 @@
+<div class="content p-1">
+    <div class="list-group-item">
+        {{>_msg}}
+        <hr>
+        <form method="post" action="/edit/{{user.id}}" >
+            <input type="hidden" id="hiddenId" value="{{user.id}}">
+         <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label><span class="text-danger">*</span>Senha</label>
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Senha com minimo 6 caracteres" value=""required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label><span class="text-danger">*</span>Repetir Senha</label>
+                    <input name="confirmpassword" type="password" class="form-control" id="confirmpassword" placeholder="Digite novamente" value="" required>
+                </div>
+            </div>
+
+            <p>
+                <span class="text-danger">* </span>Campo obrigatório
+            </p>
+            <button type="button" id="form1" class="btn btn-warning">Salvar</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    
+    try {
+        let form1 = document.querySelector('#form1')
+        form1.addEventListener('click', async () => {
+            let password = document.querySelector('#password').value
+            let confirmpassword = document.querySelector('#confirmpassword').value
+            let hiddenId = document.querySelector('#hiddenId').value
+
+
+
+            const response = await fetch('/edit/'+hiddenId, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({password, confirmpassword }) 
+            })
+            if(response.status === 200) {
+                return swal("Sucesso !", "Senha atualizada com sucesso !", "success");
+            }
+            if(password !== confirmpassword) {
+                return swal("Error: !", "  As senhas não conferem tenta novamente !", "error");
+            }
+
+            if(response.status === 411) {
+                return swal("Error: !", "  Senha muito fraca !", "error");
+            }
+        })
+        
+    } catch (err) {
+        console.log(`Erro: ${err}`)
+    }
+
+</script>

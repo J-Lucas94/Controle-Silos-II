@@ -1,0 +1,30 @@
+<div class="content p-1">
+    <div class="list-group-item">
+        <div class="d-flex">
+            <div class="mr-auto p-2">
+                <h2 class="display-4 titulo">Saldo por Silo</h2>
+            </div>
+        </div>
+        <hr>
+        {{>_msg}}
+        
+</div>
+<div class="movimentos">
+    <table  class="table table-bordered border-primary">
+        <thead>
+            <th>Silo</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            
+        </thead>
+        <tbody>
+            {{#each balance}}
+            <tr>
+                <td>{{silo}}</td>
+                <td>{{product}}</td>
+                <td>{{amount}}</td>             
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
